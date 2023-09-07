@@ -57,3 +57,7 @@ test/test_runner
 .ninja_deps
 .ninja_log
 build.ninja
+
+.vscode/
+
+test/bin/*
