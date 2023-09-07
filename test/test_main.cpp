@@ -1,10 +1,25 @@
-#include <Windows.h>
-#include "../extern/httplib.h"
-#include "../extern/json.hpp"
-#include <spdlog/spdlog.h>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <unordered_map>
+
+// Cross-platform includes
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
+// Platform-specific includes
+#ifdef _WIN32
+#include "../extern/httplib.h"
+#include "../extern/json.hpp"
+#include <spdlog/spdlog.h>
+#else
+#include "../extern/httplib.h"
+#include "../extern/json.hpp"
+#include <spdlog/spdlog.h>
+#endif
 
 // Define a struct to represent a user
 struct User {
@@ -25,13 +40,13 @@ std::vector<std::string> parse_url_path(const std::string& path) {
     std::vector<std::string> components;
     std::istringstream iss(path);
     std::string component;
-    
+
     while (std::getline(iss, component, '/')) {
         if (!component.empty()) {
             components.push_back(component);
         }
     }
-    
+
     return components;
 }
 
@@ -75,7 +90,6 @@ int main(void) {
         }
     });
 
-
     // Handle "/json/users" route
     svr.Get("/json/users", [&](const httplib::Request&, httplib::Response& res) {
         // Return a list of all users as JSON
@@ -96,8 +110,8 @@ int main(void) {
 
     // Catch-all route for handling non-existent routes
     svr.Get(R"(/.*)", [](const httplib::Request&, httplib::Response& res) {
-      res.status = 404;
-      res.set_content("Not Found", "text/plain");
+        res.status = 404;
+        res.set_content("Not Found", "text/plain");
     });
 
     svr.listen("localhost", 8080);
