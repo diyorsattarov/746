@@ -13,8 +13,8 @@ This is a sample C++ application that demonstrates how to create a simple web AP
 1. Clone this repository:
 
 ```
-   git clone https://github.com/yourusername/your-repo.git
-   cd your-repo
+git clone https://github.com/yourusername/your-repo.git
+cd your-repo
 ```
 Build the project using CMake:
 
